@@ -39,3 +39,12 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Personal files
+public/smaran*.jpg
+public/smaran*.jpeg
+public/smaran*.png
+public/smaran*.heic
+public/smaran*.HEIC
+public/*resume*.pdf
+public/*Resume*.pdf
