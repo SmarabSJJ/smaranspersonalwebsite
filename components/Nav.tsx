@@ -16,9 +16,12 @@ export default function Nav() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-[#F8F6F1]/90 backdrop-blur-sm border-b border-[#e8e4dc]">
-      <nav className="max-w-5xl mx-auto px-6 md:px-16 lg:px-24 h-16 flex items-center justify-between">
-        <Link href="/" className="font-serif text-xl tracking-tight hover:text-[#C17A3A] transition-colors">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-[#0D1117]/90 backdrop-blur-sm border-b border-[#30363D]">
+      <nav className="max-w-5xl mx-auto px-6 md:px-16 lg:px-24 h-12 flex items-center justify-between">
+        <Link
+          href="/"
+          className="font-[family-name:var(--font-headline)] text-base font-bold text-[#E6EDF3] hover:text-[#5B8FFF] transition-colors"
+        >
           SV
         </Link>
 
@@ -28,8 +31,8 @@ export default function Nav() {
             <li key={href}>
               <Link
                 href={href}
-                className={`text-xs tracking-widest uppercase transition-colors hover:text-[#C17A3A] ${
-                  pathname === href ? "text-[#C17A3A]" : "text-[#555]"
+                className={`font-[family-name:var(--font-label)] text-xs tracking-widest uppercase transition-colors hover:text-[#5B8FFF] ${
+                  pathname === href ? "text-[#5B8FFF]" : "text-[#8B949E]"
                 }`}
               >
                 {label}
@@ -40,7 +43,7 @@ export default function Nav() {
 
         {/* Mobile toggle */}
         <button
-          className="md:hidden text-xs tracking-widest uppercase text-[#555]"
+          className="md:hidden font-[family-name:var(--font-label)] text-xs tracking-widest uppercase text-[#8B949E] hover:text-[#5B8FFF] transition-colors"
           onClick={() => setOpen(!open)}
           aria-label="Toggle menu"
         >
@@ -50,14 +53,14 @@ export default function Nav() {
 
       {/* Mobile menu */}
       {open && (
-        <div className="md:hidden bg-[#F8F6F1] border-t border-[#e8e4dc] px-6 py-6 flex flex-col gap-5">
+        <div className="md:hidden bg-[#0D1117] border-t border-[#30363D] px-6 py-6 flex flex-col gap-5">
           {links.map(({ href, label }) => (
             <Link
               key={href}
               href={href}
               onClick={() => setOpen(false)}
-              className={`text-xs tracking-widest uppercase transition-colors hover:text-[#C17A3A] ${
-                pathname === href ? "text-[#C17A3A]" : "text-[#555]"
+              className={`font-[family-name:var(--font-label)] text-xs tracking-widest uppercase transition-colors hover:text-[#5B8FFF] ${
+                pathname === href ? "text-[#5B8FFF]" : "text-[#8B949E]"
               }`}
             >
               {label}

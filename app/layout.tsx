@@ -1,26 +1,31 @@
 import type { Metadata } from "next";
-import { DM_Serif_Display, DM_Mono } from "next/font/google";
+import { Sora, IBM_Plex_Sans, Geist } from "next/font/google";
 import "./globals.css";
 import Nav from "@/components/Nav";
 
-const serif = DM_Serif_Display({
-  weight: "400",
+const sora = Sora({
+  weight: ["400", "600", "700", "800"],
   subsets: ["latin"],
-  variable: "--font-serif",
+  variable: "--font-headline",
 });
 
-const mono = DM_Mono({
-  weight: ["300", "400", "500"],
+const ibmPlexSans = IBM_Plex_Sans({
+  weight: ["400", "500", "600"],
   subsets: ["latin"],
-  variable: "--font-mono",
+  variable: "--font-body",
+});
+
+const geist = Geist({
+  subsets: ["latin"],
+  variable: "--font-label",
 });
 
 export const metadata: Metadata = {
   title: "Smaran Voora",
-  description: "Full stack solutions expert building solutions to problems you don't have yet.",
+  description: "Full stack solutions engineer building solutions to problems you don't have yet.",
   openGraph: {
     title: "Smaran Voora",
-    description: "Full stack solutions expert building solutions to problems you don't have yet.",
+    description: "Full stack solutions engineer building solutions to problems you don't have yet.",
     type: "website",
   },
 };
@@ -31,8 +36,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${serif.variable} ${mono.variable}`}>
-      <body className="bg-[#F8F6F1] text-[#111] antialiased">
+    <html lang="en" className={`${sora.variable} ${ibmPlexSans.variable} ${geist.variable}`}>
+      <body className="bg-[#0D1117] text-[#E6EDF3] antialiased">
         <Nav />
         {children}
       </body>

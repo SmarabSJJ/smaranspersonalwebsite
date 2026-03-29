@@ -1,9 +1,17 @@
 @import "tailwindcss";
 
 :root {
-  --font-serif: "DM Serif Display", serif;
-  --font-mono: "DM Mono", monospace;
-  --accent: #C17A3A;
+  --font-headline: "Sora", sans-serif;
+  --font-body: "IBM Plex Sans", sans-serif;
+  --font-label: "Geist", sans-serif;
+
+  --bg: #0D1117;
+  --surface: #161B22;
+  --border: #30363D;
+  --text: #E6EDF3;
+  --text-muted: #8B949E;
+  --blue: #5B8FFF;
+  --green: #39D353;
 }
 
 * {
@@ -15,12 +23,12 @@ html {
 }
 
 body {
-  background: #F8F6F1;
-  color: #111;
-  font-family: var(--font-mono);
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
 }
 
-h1, h2, h3 {
-  font-family: var(--font-serif);
+h1, h2, h3, h4 {
+  font-family: var(--font-headline);
 }

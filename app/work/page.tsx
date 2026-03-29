@@ -17,6 +17,7 @@ interface Job {
   title: string;
   location: string;
   period: string;
+  current?: boolean;
   what: string;
   highlights: string[];
   tags: string[];
@@ -57,6 +58,7 @@ const experience: Job[] = [
     title: "Software Engineer",
     location: "Austin, TX",
     period: "Jan 2026 — Present",
+    current: true,
     what: "Full-stack engineering on the Microsoft Dynamics platform — building and maintaining the systems that power internal business operations at one of the world's largest payment networks.",
     highlights: [
       "Integrate backend services, business logic, and user-facing components across the Dynamics stack.",
@@ -68,7 +70,7 @@ const experience: Job[] = [
     company: "Charles Schwab",
     title: "Software Engineering Intern",
     location: "Southlake, TX",
-    period: "June 2025 — Aug 2025",
+    period: "Jun 2025 — Aug 2025",
     what: "Built a system that replaced a painful manual process: transaction corrections that used to be done by hand, one at a time, at a fraction of the scale.",
     highlights: [
       "Designed and shipped a full-stack automation tool connecting two internal APIs with predefined correction policies — eliminated the manual correction process entirely.",
@@ -106,26 +108,22 @@ export default function Work() {
   const [tab, setTab] = useState<"projects" | "experience">("experience");
 
   return (
-    <main className="min-h-screen pt-32 pb-24 px-6 md:px-16 lg:px-24 max-w-5xl mx-auto">
-      <motion.p
-        custom={0}
-        variants={fadeUp}
-        initial="hidden"
-        animate="show"
-        className="text-sm tracking-widest uppercase text-[#C17A3A] mb-6"
-      >
-        Work
-      </motion.p>
-
-      <motion.h1
-        custom={1}
-        variants={fadeUp}
-        initial="hidden"
-        animate="show"
-        className="font-serif text-5xl md:text-6xl leading-tight mb-12"
-      >
-        What I&apos;ve built<br />and where I&apos;ve been.
-      </motion.h1>
+    <main className="min-h-screen pt-28 pb-24 px-6 md:px-16 lg:px-24 max-w-5xl mx-auto">
+      {/* Section header */}
+      <motion.div custom={0} variants={fadeUp} initial="hidden" animate="show" className="relative mb-12">
+        <span
+          aria-hidden
+          className="absolute -top-6 left-0 font-[family-name:var(--font-headline)] font-black text-[8rem] leading-none text-[#161B22] select-none pointer-events-none"
+        >
+          03
+        </span>
+        <p className="font-[family-name:var(--font-label)] text-xs tracking-widest uppercase text-[#8B949E] mb-3 relative z-10">
+          Work
+        </p>
+        <h1 className="font-[family-name:var(--font-headline)] font-bold text-4xl md:text-5xl text-[#E6EDF3] relative z-10">
+          What I&apos;ve built<br />and where I&apos;ve been.
+        </h1>
+      </motion.div>
 
       {/* Tabs */}
       <motion.div
@@ -133,21 +131,21 @@ export default function Work() {
         variants={fadeUp}
         initial="hidden"
         animate="show"
-        className="flex gap-0 mb-14 border-b border-[#e8e4dc]"
+        className="flex gap-0 mb-12 border-b border-[#30363D]"
       >
         {(["experience", "projects"] as const).map((t) => (
           <button
             key={t}
             onClick={() => setTab(t)}
-            className={`relative px-0 mr-10 pb-4 text-xs tracking-widest uppercase transition-colors ${
-              tab === t ? "text-[#111]" : "text-[#999] hover:text-[#555]"
+            className={`relative px-0 mr-10 pb-4 font-[family-name:var(--font-label)] text-xs tracking-widest uppercase transition-colors ${
+              tab === t ? "text-[#E6EDF3]" : "text-[#8B949E] hover:text-[#E6EDF3]"
             }`}
           >
             {t === "projects" ? "Projects" : "Experience"}
             {tab === t && (
               <motion.div
                 layoutId="tab-underline"
-                className="absolute bottom-0 left-0 right-0 h-px bg-[#111]"
+                className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#5B8FFF] rounded-full"
               />
             )}
           </button>
@@ -162,39 +160,41 @@ export default function Work() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.3 }}
-            className="divide-y divide-[#e8e4dc]"
+            className="grid grid-cols-1 md:grid-cols-2 gap-4"
           >
             {projects.map((project) => (
               <div
                 key={project.title}
-                className="py-10 grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-6 md:gap-16"
+                className="border border-[#30363D] bg-[#161B22] rounded p-6 hover:border-[#5B8FFF] transition-all duration-200 hover:-translate-y-0.5 flex flex-col gap-3"
               >
-                <div>
-                  <h2 className="font-serif text-2xl mb-2">{project.title}</h2>
+                <div className="flex items-start justify-between gap-2">
+                  <h2 className="font-[family-name:var(--font-headline)] font-bold text-lg text-[#E6EDF3]">
+                    {project.title}
+                  </h2>
                   {project.award && (
-                    <span className="text-xs text-[#C17A3A] tracking-wide">{project.award}</span>
+                    <span className="font-[family-name:var(--font-label)] text-[10px] tracking-wide text-[#39D353] border border-[#39D353]/30 bg-[#39D353]/10 px-2 py-0.5 rounded-full whitespace-nowrap">
+                      🏆 {project.award}
+                    </span>
                   )}
                 </div>
-                <div>
-                  <p className="text-[#444] mb-4 leading-relaxed">{project.detail}</p>
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    {project.tags.map((tag) => (
-                      <span key={tag} className="text-xs text-[#999] border border-[#ddd] px-2 py-0.5">
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                  {project.href && (
-                    <a
-                      href={project.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-xs tracking-widest uppercase text-[#C17A3A] hover:underline"
-                    >
-                      View Site →
-                    </a>
-                  )}
+                <p className="text-sm text-[#8B949E] leading-relaxed flex-1">{project.detail}</p>
+                <div className="flex flex-wrap gap-1.5 mt-1">
+                  {project.tags.map((tag) => (
+                    <span key={tag} className="font-[family-name:var(--font-label)] text-[10px] text-[#39D353] border border-[#30363D] bg-[#0D1117] px-2 py-0.5 rounded">
+                      {tag}
+                    </span>
+                  ))}
                 </div>
+                {project.href && (
+                  <a
+                    href={project.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-[family-name:var(--font-label)] text-xs tracking-widest uppercase text-[#5B8FFF] hover:underline mt-1"
+                  >
+                    View Site →
+                  </a>
+                )}
               </div>
             ))}
           </motion.div>
@@ -205,43 +205,73 @@ export default function Work() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.3 }}
-            className="divide-y divide-[#e8e4dc]"
+            className="relative"
           >
-            {experience.map((job) => (
-              <div
-                key={job.company}
-                className="py-10 grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-6 md:gap-16"
-              >
-                <div>
-                  <h2 className="font-serif text-2xl mb-1">{job.company}</h2>
-                  <p className="text-sm text-[#555] mb-1">{job.title}</p>
-                  <p className="text-xs text-[#999]">{job.location}</p>
-                  <p className="text-xs text-[#999] mt-0.5">{job.period}</p>
-                </div>
-                <div>
-                  <p className="text-[#333] mb-5 leading-relaxed">{job.what}</p>
-                  {job.highlights.length > 0 && (
-                    <ul className="space-y-2 mb-5">
-                      {job.highlights.map((h, i) => (
-                        <li key={i} className="text-sm text-[#555] leading-relaxed pl-4 relative before:absolute before:left-0 before:content-['—'] before:text-[#C17A3A]">
-                          {h}
-                        </li>
+            {/* Timeline connector line */}
+            <div className="absolute left-[7px] top-3 bottom-3 w-px bg-[#30363D]" />
+
+            <div className="space-y-0">
+              {experience.map((job, i) => (
+                <div key={job.company} className="relative pl-8 pb-10 last:pb-0">
+                  {/* Timeline dot */}
+                  <div className={`absolute left-0 top-1 w-3.5 h-3.5 rounded-full border-2 ${job.current ? "border-[#5B8FFF] bg-[#5B8FFF]" : "border-[#30363D] bg-[#0D1117]"}`} />
+
+                  <div className="border border-[#30363D] bg-[#161B22] rounded p-5 hover:border-[#5B8FFF] transition-colors duration-200">
+                    <div className="flex items-start justify-between gap-2 mb-3">
+                      <div>
+                        <h2 className="font-[family-name:var(--font-headline)] font-bold text-base text-[#E6EDF3]">
+                          {job.title}
+                        </h2>
+                        <div className="flex items-center gap-2 mt-1">
+                          <span className="font-[family-name:var(--font-label)] text-xs text-[#5B8FFF] border border-[#5B8FFF]/30 bg-[#5B8FFF]/10 px-2 py-0.5 rounded">
+                            {job.company}
+                          </span>
+                          {job.current && (
+                            <span className="font-[family-name:var(--font-label)] text-[10px] text-[#39D353] border border-[#39D353]/30 bg-[#39D353]/10 px-2 py-0.5 rounded-full">
+                              ● CURRENT
+                            </span>
+                          )}
+                        </div>
+                      </div>
+                      <div className="text-right">
+                        <p className="font-[family-name:var(--font-label)] text-xs text-[#8B949E]">{job.period}</p>
+                        <p className="font-[family-name:var(--font-label)] text-xs text-[#8B949E] mt-0.5">{job.location}</p>
+                      </div>
+                    </div>
+
+                    <p className="text-sm text-[#8B949E] leading-relaxed mb-3">{job.what}</p>
+
+                    {job.highlights.length > 0 && (
+                      <ul className="space-y-1.5 mb-3">
+                        {job.highlights.map((h, j) => (
+                          <li key={j} className="text-xs text-[#8B949E] leading-relaxed pl-4 relative before:absolute before:left-0 before:content-['→'] before:text-[#5B8FFF]">
+                            {h}
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+
+                    <div className="flex flex-wrap gap-1.5">
+                      {job.tags.map((tag) => (
+                        <span key={tag} className="font-[family-name:var(--font-label)] text-[10px] text-[#39D353] border border-[#30363D] bg-[#0D1117] px-2 py-0.5 rounded">
+                          {tag}
+                        </span>
                       ))}
-                    </ul>
-                  )}
-                  <div className="flex flex-wrap gap-2">
-                    {job.tags.map((tag) => (
-                      <span key={tag} className="text-xs text-[#999] border border-[#ddd] px-2 py-0.5">
-                        {tag}
-                      </span>
-                    ))}
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* Footer */}
+      <div className="mt-24 pt-6 border-t border-[#30363D]">
+        <p className="font-[family-name:var(--font-label)] text-xs text-[#8B949E]">
+          Smaran Voora · 2025 · Built with Next.js
+        </p>
+      </div>
     </main>
   );
 }
